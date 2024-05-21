@@ -1,4 +1,8 @@
 #include <iostream>
+#include "Arry.h"
+#include "BasicMethods.h"
+#include "ArrayAlgo.h"
+
 
 using namespace std;
 
@@ -9,42 +13,29 @@ int safeExit()
 	return 0;
 }
 
-struct Arry
-{
-	int* A;
-	int size;
-	int length;
-};
-
-void display(struct Arry arr)
-{
-	cout << "The elements are:" << endl;
-	for (int i = 0; i < arr.length; i++)
-	{
-		cout << arr.A[i] << " ";
-	}
-	return;
-}
 
 int main()
 {
-	struct Arry arr;
-	arr.A = NULL;
-	arr.length = 0;
-	arr.size = 0;
-	int n = 0;
-	cout << endl << "Enter size of array" << endl;
-	cin >> arr.size;
-	arr.A = new int[arr.size];
+	struct Arry arr = {
+		NULL,10,9
+	};
+	arr.A = new int[arr.size] {2, 4, 6, 8, 10, 12, 14, 16, 18};
 
-	cout << "Enter number of elements" << endl;
-	cin >> n;
-	cout << "Enter all elements";
-	for (int i = 0; i < n; i++)
-	{
-		cin >> arr.A[i];
-	}
-	arr.length = n;
+	//Append(&arr, 10);
+	//Insert(&arr, 8, 17);
+	//cout << endl << Delete(&arr, 8);
+	//cout << endl << LinearSearch(&arr, 8);
+	//cout << endl << BinarySearch(arr, 20);
+	//cout << endl << BinarySearchRc(arr,0,arr.length - 1, 4);
+
+	cout << endl << Get(arr, 1);
+	Set(&arr, 1, 3);
+	cout << endl << Max(arr);
+	cout << endl << Min(arr);
+	cout << endl << Sum(arr);
+	cout << endl << Avg(arr);
+
+	Display(arr);
 
 	return safeExit();
 }

@@ -3,6 +3,13 @@
 
 using namespace std;
 
+void Swap(int* a, int* b)
+{
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
 void Display(struct Arry arr)
 {
 	cout << endl << "The elements are:" << endl;
@@ -67,6 +74,21 @@ int Delete(struct Arry* arr, int index)
 	}
 	arr->length--;
 	return x;
+}
+
+int Sum(struct Arry arr)
+{
+	int sum = 0;
+	for (int i = 0; i < arr.length; i++)
+	{
+		sum = sum + arr.A[i];
+	}
+	return sum;
+}
+
+float Avg(struct Arry arr)
+{
+	return (float)Sum(arr) / arr.length;
 }
 
 int Max(struct Arry arr)

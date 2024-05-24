@@ -127,14 +127,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ArrayAlgo.cpp" />
     <ClCompile Include="Arrays_Bari.cpp" />
-    <ClCompile Include="BasicMethods.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Arry.h" />
-    <ClInclude Include="BasicMethods.h" />
-    <ClInclude Include="ArrayAlgo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

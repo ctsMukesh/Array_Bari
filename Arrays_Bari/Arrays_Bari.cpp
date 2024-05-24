@@ -1,8 +1,5 @@
 #include <iostream>
 #include "Arry.h"
-#include "BasicMethods.h"
-#include "ArrayAlgo.h"
-
 
 using namespace std;
 
@@ -13,43 +10,45 @@ int safeExit()
 	return 0;
 }
 
-
 int main()
 {
-	struct Arry arr1 = {
-		NULL,10,9
-	};
-	arr1.A = new int[arr1.size] {2, 4, 6, 8, 10, 12, 14, 16, 18};
-	struct Arry arr2 = {
-		NULL,10,7
-	};
-	arr2.A = new int[arr2.size] {1, 3, 5, 7, 9, 11, 14};
+	Arry<int> arr1(10);
+	int a1[] = { 1, 2, 3, 4, 5, 6, 9, 10, 11 };
+	arr1.setArray(a1, 9);
+	Arry<int> arr2(10);
+	int a2[9] = {2, 4, 6, 8, 10, 12, 14, 16, 18};
+	arr2.setArray(a2, 9);
+	Arry<int> arr3(10);
+	int a3[7] = { 1, 3, 3, 3, 9, 11, 11 };
+	arr3.setArray(a3, 7);
+	Arry<int> arr4(10);
+	int a4[8] = { 3, 6, 10, 8, 2, 4, 5, 7 };
+	arr4.setArray(a4, 8);
 
-	//Append(&arr, 10);
-	//Insert(&arr, 8, 17);
-	//cout << endl << Delete(&arr, 8);
-	//cout << endl << LinearSearch(&arr, 8);
-	//cout << endl << BinarySearch(arr, 20);
-	//cout << endl << BinarySearchRc(arr,0,arr.length - 1, 4);
+	arr1.Append(10);
+	arr1.Insert(8, 17);
+	cout << endl << arr1.Delete(8);
+	cout << endl << arr1.LinearSearch(8);
+	cout << endl << arr1.BinarySearch(20);
+	cout << endl << arr1.BinarySearchRc(4);
 
-	//cout << endl << Get(arr, 1);
-	//Set(&arr, 1, 3);
-	//cout << endl << Max(arr);
-	//cout << endl << Min(arr);
-	//cout << endl << Sum(arr);
-	//cout << endl << Avg(arr);
+	cout << endl << arr1.Get(1);
+	arr1.Set(1, 3);
+	cout << endl << arr1.Max();
+	cout << endl << arr1.Min();
+	cout << endl << arr1.Sum();
+	cout << endl << arr1.Avg();
 
-	//Reverse2(&arr);
+	arr1.Reverse2();
 
-	//InsertSorted(&arr, 1);
-	//cout << endl << isSorted(arr);
+	arr1.InsertSorted(1);
+	cout << endl << arr1.isSorted();
 
-	//SeparateNegPosi(&arr1);
-	Display(arr1);
+	arr1.SeparateNegPosi();
+	arr1.Display();
 
-	Display(*Merge(arr1, arr2));
+	arr1.Merge(arr3).Display();
 
-	delete(arr1.A);
-	arr1.A = NULL;
+
 	return safeExit();
 }

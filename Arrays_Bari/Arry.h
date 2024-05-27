@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
@@ -62,6 +63,83 @@ public:
 		}
 		else
 			cout << endl << "Given array is bigger than size";
+	}
+	void FindMissingSorted()
+	{
+		T diff = A[0];
+		cout << endl;
+		for (int i = 0; i < length; i++)
+		{
+			if (diff < A[i] - i)
+			{
+				while (diff < A[i] - i)
+				{
+					cout << diff + i << " ";
+					diff++;
+				}
+			}
+		}
+	}
+
+	void FindMissingUnsorted(int low, int high)
+	{
+		int* H = new int[high - low + 1] {0}; //Create array of all 0s
+		if (is_floating_point_v<decltype(A[0])>)
+		{
+			cout << endl << "This method can't be used for float. Use FindMissingSorted";
+			return;
+		}
+		cout << endl;
+		for (int i = 0;i < length; i++)
+		{
+			int intVal = static_cast<int>(round(A[i]));
+			H[intVal - low]++;
+		}
+		for (int i = low; i <= high; i++)
+		{
+			if (H[i - low] == 0)
+				cout << i << " ";
+		}
+		delete[]H;
+	}
+
+	void FindDuplicatedSorted()
+	{
+		int lastFound = 0;
+		cout << endl;
+		for (int i = 0;i < length; i++)
+		{
+			if (A[i] == A[i + 1])
+			{
+				int j = i + 1;
+				while (A[j] == A[i])
+					j++;
+				cout << A[i] << " " << j - i << " times, ";
+				i = j - 1;
+			}
+		}
+	}
+
+	void FindDuplicatedSorted2()
+	{
+		int* H = new int [100] {0};
+		if (is_floating_point_v<decltype(A[0])>)
+		{
+			cout << endl << "This method can't be used for float. Use FindDuplicatedSorted";
+			return;
+		}
+		cout << endl;
+		for (int i = 0; i < length; i++)
+		{
+			int intVal = static_cast<int>(round(A[i]));
+			H[intVal]++;
+		}
+		for (int i = 0; i < 100; i++)
+		{
+			if (H[i] > 1)
+				cout << i << " " << H[i] << " times, ";
+		}
+		delete[]H;
 	}
 
 	int LinearSearch(T key)

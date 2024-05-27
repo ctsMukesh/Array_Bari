@@ -49,6 +49,10 @@ int main()
 
 	arr1.Merge(arr3).Display();
 
+	//FindMissingSorted(arr1);
+	//FindMissingUnsorted(arr4, 1, 10);
+	//FindDuplicatedSorted(arr3);
+	//FindDuplicatedSorted2(arr3);
 
 	return safeExit();
 }

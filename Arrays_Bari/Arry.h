@@ -51,6 +51,18 @@ public:
 	{
 		delete[] A;
 	}
+	int GetSize()
+	{
+		return size;
+	}
+	int GetLen()
+	{
+		return length;
+	}
+	void incLen()
+	{
+		length++;
+	}
 	void setArray(T* arr, int len)
 	{
 		if (len <= size)
@@ -64,6 +76,85 @@ public:
 		else
 			cout << endl << "Given array is bigger than size";
 	}
+
+	void SumOfPairEquals(T val)
+	{
+		for (int i = 0; i < GetLen() - 1; i++)
+		{
+			for (int j = i + 1; j < GetLen(); j++)
+			{
+				if (Get(i) + Get(j) == val)
+					cout << endl << Get(i) << " + " << Get(j) << " = " << val;
+			}
+		}
+	}
+
+	void SumOfPairEqualsHsh(T val)
+	{
+		int H[] = new int[static_cast<int>(round(Max()))];
+		for (int i = 0; i < GetLen(); i++)
+		{
+			H[static_cast<int>(round(Get(i)))]++;
+			if(H[val - i] > 0)
+				cout << endl << i << " + " << val - i << " = " << val;
+				
+		}
+	}
+
+	void SumOfPairEqualSorted(T val)
+	{
+		int i = 0; j = GetLen() - 1;
+		while (i < j)
+		{
+			if (Get(i) + Get(j) > val)
+				j--;
+			else if (Get(i) + Get(j) == val)
+			{
+				cout << endl << Get(i) << " + " << Get(j) << " = " << val;
+				i++;
+				j--;
+			}
+			else if (Get(i) + Get(j) < val)
+				i++;
+		}
+	}
+
+	void FindDuplicateUnsorted2()
+	{
+		int H[] = new int[static_cast<int>(round(Max()))];
+		for (int i = 0; i < GetLen(); i++)
+		{
+			H[static_cast<int>(round(Get(i))]++;
+		}
+		for (int i = 0;i < static_cast<int>(round(Max()));i++)
+		{
+			if (H[i] > 1)
+				cout << endl << i << " repeated " << H[i] << " times";
+		}
+		delete[]H;
+	}
+
+	void FindDuplicateUnsorted()
+	{
+		for (int i = 0; i < length - 1; i++)
+		{
+			int count = 1;
+			if (A[i] != -1)
+			{
+				for (int j = i + 1;j < length; j++)
+				{
+					if (A[i] == A[j])
+					{
+						count = count + 1;
+						A[j] = -1;
+					}
+				}
+			}
+			if (count > 1)
+				cout << endl << A[i] << " repeated " << count << " times.";
+		}
+	}
+
 	void FindMissingSorted()
 	{
 		T diff = A[0];
@@ -107,7 +198,7 @@ public:
 	{
 		int lastFound = 0;
 		cout << endl;
-		for (int i = 0;i < length; i++)
+		for (int i = 0;i < length - 1; i++)
 		{
 			if (A[i] == A[i + 1])
 			{
@@ -122,7 +213,7 @@ public:
 
 	void FindDuplicatedSorted2()
 	{
-		int* H = new int [100] {0};
+		int* H = new int [static_cast<int>(round(Max()))] {0};
 		if (is_floating_point_v<decltype(A[0])>)
 		{
 			cout << endl << "This method can't be used for float. Use FindDuplicatedSorted";
@@ -238,58 +329,133 @@ public:
 	Arry Merge(Arry arr2)
 	{
 		int i = 0, j = 0, k = 0;
-		//struct Arry arrC = { NULL, arr1.size + arr2.size, 0 };
+		//struct Arry arrC = { NULL, arr1.size + arr2.GetSize(), 0 };
 		//arrC.A = new int[arrC.size];
-		Arry arrC(size + arr2.size);
-		while (i < length && j < arr2.length)
+		Arry arrC(GetSize + arr2.GetSize());
+		while (i < GetLen() && j < arr2.GetLen())
 		{
-			if (A[i] <= arr2.A[j])
+			if (Get(i) <= arr2.Get(j))
 			{
-				arrC.A[k] = A[i];
-				arrC.length++;
+				arrC.Set(k) = Get(i);
+				arrC.incLen();
 				k++;
 				i++;
 			}
-			else if (A[i] > arr2.A[j])
+			else if (Get(i) > arr2.Get(j))
 			{
-				arrC.A[k] = arr2.A[j];
-				arrC.length++;
+				arrC.Set(k) = arr2.Get(i);
+				arrC.incLen();
 				k++;
 				j++;
 			}
 		}
-		for (;i < length; i++, k++)
+		for (;i < GetLen(); i++, k++)
 		{
-			arrC.A[k] = A[i];
-			arrC.length++;
+			arrC.Set(k) = Get(i);
+			arrC.incLen();
 		}
-		for (;j < arr2.length; j++, k++)
+		for (;j < arr2.GetLen(); j++, k++)
 		{
-			arrC.A[k] = arr2.A[j];
-			arrC.length++;
+			arrC.Set(k) = arr2.Get(j);
+			arrC.incLen();
 		}
 		return arrC;
 	}
 
+	T Min()
+	{
+		T min = A[0];
+		for (int i = 0; i < length; i++)
+		{
+			if (min > A[i])
+				min = A[i];
+		}
+		return min;
+	}
+
+	T Max()
+	{
+		T max = A[0];
+		for (int i = 0; i < length; i++)
+		{
+			if (max < A[i])
+				max = A[i];
+		}
+		return max;
+	}
+
+	float Avg()
+	{
+		return (float)Sum() / length;
+	}
+
+	T Sum()
+	{
+		T sum = 0;
+		for (int i = 0; i < length; i++)
+		{
+			sum = sum + A[i];
+		}
+		return sum;
+	}
+
+	T Delete(int index)
+	{
+		int x = 0;
+		if (index >= 0 && index >= length)
+		{
+			cout << "out of range" << endl;
+			return x;
+		}
+		x = A[index];
+		for (int i = index; i < length - 1; i++)
+		{
+			A[i] = A[i + 1];
+		}
+		length--;
+		return x;
+	}
+
+	void Insert(int index, T ele)
+	{
+		if (length == size) {
+			cout << "Array is full" << endl;
+			return;
+
+		}
+		if (index >= 0 && index <= length)
+		{
+			for (int i = length; i > index; i--)
+			{
+				A[i] = A[i - 1];
+			}
+			A[index] = ele;
+			length++;
+		}
+		return;
+	}
+
+	void Append(T ele)
+	{
+		if (size < length)
+			A[length++] = ele;
+		return;
+	}
+
+	void Set(int index, T ele)
+	{
+		if (index >= 0 && index < length)
+			A[index] = ele;
+	}
+
+	T Get(int index)
+	{
+		if (index >= 0 && index < length)
+			return A[index];
+		return -1;
+	}
+
 	void Display();
-
-	T Get(int index);
-
-	void Set(int index, T ele);
-
-	void Append(T ele);
-
-	void Insert(int index, T ele);
-
-	T Delete(int index);
-
-	T Sum();
-
-	float Avg();
-
-	T Max();
-
-	T Min();
 };
 
 template<class T>
@@ -301,106 +467,4 @@ void Arry<T>::Display()
 		cout << A[i] << " ";
 	}
 	return;
-}
-
-template<class T>
-T Arry<T>::Get(int index)
-{
-	if (index >= 0 && index < length)
-		return A[index];
-	return -1;
-}
-
-template<class T>
-void Arry<T>::Set(int index, T ele)
-{
-	if (index >= 0 && index < length)
-		A[index] = ele;
-}
-
-template<class T>
-void Arry<T>::Append(T ele)
-{
-	if (size < length)
-		A[length++] = ele;
-	return;
-}
-
-template<class T>
-void Arry<T>::Insert(int index, T ele)
-{
-	if (length == size) {
-		cout << "Array is full" << endl;
-		return;
-
-	}
-	if (index >= 0 && index <= length)
-	{
-		for (int i = length; i > index; i--)
-		{
-			A[i] = A[i - 1];
-		}
-		A[index] = ele;
-		length++;
-	}
-	return;
-}
-
-template<class T>
-T Arry<T>::Delete(int index)
-{
-	int x = 0;
-	if (index >= 0 && index >= length)
-	{
-		cout << "out of range" << endl;
-		return x;
-	}
-	x = A[index];
-	for (int i = index; i < length - 1; i++)
-	{
-		A[i] = A[i + 1];
-	}
-	length--;
-	return x;
-}
-
-template<class T>
-T Arry<T>::Sum()
-{
-	T sum = 0;
-	for (int i = 0; i < length; i++)
-	{
-		sum = sum + A[i];
-	}
-	return sum;
-}
-
-template<class T>
-float Arry<T>::Avg()
-{
-	return (float)Sum() / length;
-}
-
-template<class T>
-T Arry<T>::Max()
-{
-	T max = A[0];
-	for (int i = 0; i < length; i++)
-	{
-		if (max < A[i])
-			max = A[i];
-	}
-	return max;
-}
-
-template<class T>
-T Arry<T>::Min()
-{
-	T min = A[0];
-	for (int i = 0; i < length; i++)
-	{
-		if (min > A[i])
-			min = A[i];
-	}
-	return min;
 }
